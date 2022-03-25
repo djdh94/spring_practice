@@ -1,0 +1,16 @@
+package com.ict.controller.di.classfile;
+
+import org.springframework.stereotype.Component;
+@Component
+public class Broadcast {
+		//Stage에 의존하도록 설정
+		private Stage stage;
+		
+		public Broadcast(Stage stage) {
+			System.out.println("방송송출중인");
+			this.stage = stage;
+		}
+
+	
+
+}
