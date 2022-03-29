@@ -23,5 +23,9 @@
 		
 		<constructor-arg ref="popSinger"></constructor-arg>
 		</bean>
+		
+		
+		
+		
 </beans>
 
