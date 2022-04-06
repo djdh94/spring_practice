@@ -49,4 +49,5 @@
     <fullyQualifiedTypeName name="java.security.Timestamp"/>
     <fullyQualifiedTypeName name="java.sql.Timestamp"/>
     <fullyQualifiedTypeName name="lombok.Data"/>
+    <fullyQualifiedTypeName name="com.ict.mapper.BoardMapper"/>
 </qualifiedTypeNameHistroy>

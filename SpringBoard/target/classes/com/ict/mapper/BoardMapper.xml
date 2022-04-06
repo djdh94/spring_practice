@@ -5,10 +5,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.ict.mapper.BoardMapper">
 
-  <select id="getList" resultType="com.ict.vo.BoardVO">
+  <select id="getList" resultType="com.ict.domain.BoardVO">
 <![CDATA[
-SELECT*FROM board_tbl WHERE bno<4
+SELECT*FROM board_tbl order by bno desc
 ]]>
  </select>
  
+ <!-- insert 구문이므로 insert태그를 써야하고 리턴자료가 없으니 resultType도 작성안합니다 -->
+ <insert id="insert">
+ insert into board_tbl (bno,title,content,writer) VALUES(board_num.nextval,#{title},#{content},#{writer})
+ </insert>
+ 
+ <select id="select" resultType="com.ict.domain.BoardVO">
+
+ select*from board_tbl where bno=#{bno}
+
+ </select>
+ 
+ <delete id="delete">
+ delete from board_tbl where bno=#{bno}
+ </delete>
 </mapper>

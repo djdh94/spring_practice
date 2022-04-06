@@ -23,7 +23,7 @@ import lombok.extern.log4j.Log4j;
 	@RunWith(SpringJUnit4ClassRunner.class)
 	@ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 	@Log4j
-public class OracleConnectionPoolTest {
+	public class OracleConnectionPoolTest {
 	@Autowired
 	private DataSource dataSource;
 	@Autowired
@@ -37,9 +37,6 @@ public class OracleConnectionPoolTest {
 	public void testConnection() {
 		try(Connection con = dataSource.getConnection()){
 			log.info(con);
-			System.out.println("hikariCP connection");
-System.out.println("히카리 연결끝");
-			
 		}catch(Exception e) {
 			fail(e.getMessage());
 		}
