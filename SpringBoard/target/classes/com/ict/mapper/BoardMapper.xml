@@ -6,6 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.ict.mapper.BoardMapper">
 
   <select id="getList" resultType="com.ict.domain.BoardVO">
+  <!-- 부등호를 쓰기위해서는 <![CDATA[실행문]]> 과 같이 내부에 작성하면 부등호는 문자로 간주된다 -->
 <![CDATA[
 SELECT*FROM board_tbl order by bno desc
 ]]>
@@ -13,7 +14,8 @@ SELECT*FROM board_tbl order by bno desc
  
  <!-- insert 구문이므로 insert태그를 써야하고 리턴자료가 없으니 resultType도 작성안합니다 -->
  <insert id="insert">
- insert into board_tbl (bno,title,content,writer) VALUES(board_num.nextval,#{title},#{content},#{writer})
+ insert into board_tbl (bno,title,content,writer) VALUES
+ (board_num.nextval,#{title},#{content},#{writer})
  </insert>
  
  <select id="select" resultType="com.ict.domain.BoardVO">
@@ -25,4 +27,8 @@ SELECT*FROM board_tbl order by bno desc
  <delete id="delete">
  delete from board_tbl where bno=#{bno}
  </delete>
+ 
+ <update id="update">
+ update board_tbl set title=#{title},content=#{content},updatedate=sysdate where bno=#{bno}
+ </update>
 </mapper>

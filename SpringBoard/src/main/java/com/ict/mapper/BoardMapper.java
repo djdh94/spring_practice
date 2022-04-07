@@ -15,4 +15,9 @@ public interface BoardMapper {
 	public BoardVO select(long bno);
 	
 	public void delete(long bno);
+	
+	// 전달변수가 title,content,bno이므로 단일자료가 아닌 묶음으로 전달
+	public void update(BoardVO vo);
+	
+	
 }

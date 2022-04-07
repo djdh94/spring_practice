@@ -20,18 +20,14 @@ import lombok.extern.log4j.Log4j;
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 @Log4j
 public class BoardMapperTests {
-	
 	@Autowired
 	private BoardMapper boardMapper;
-	
 	//@Test
 	public void testGetList() {
 		List<BoardVO> result=boardMapper.getList();
 		log.info(result);
 	}
-	
-	
-	@Test
+	//@Test
 	public void testInsert() {
 		
 		BoardVO vo =new BoardVO();
@@ -51,10 +47,20 @@ public class BoardMapperTests {
 		// 로그찍기
 		log.info(vo);
 	}
-	
 	//@Test
 	public void getdelete() {
 		boardMapper.delete(5);
+	}
+	@Test
+	public void getAllList() {
+		
+		BoardVO board = new BoardVO();
+		board.setContent("테스트");
+		board.setTitle("테스트");
+		board.setBno(24);
+		log.info(board);
+		boardMapper.update(board);
+		
 	}
 	
 }
