@@ -146,7 +146,7 @@ public class BasicController {
 		@GetMapping(value = "/page/{bookNum}/{pageNum}")
 		public String getPage(@PathVariable int pageNum,
 							  @PathVariable int bookNum,
-				Model model) {
+				Model model) { 
 			// page.jsp를 views 폴더에 만들어주세요
 			// 해당 페이지는 int pageNum을 받아서 바인딩합니다.
 			model.addAttribute("page",pageNum);

@@ -9,7 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<div class="container">
 <table class="table table-hover">
 <thead>
 <tr>
@@ -34,5 +34,7 @@
 </c:forEach>
 </tbody>
 </table>
+<a href="/boardInsert"class="btn btn-success">글쓰기</a>
+</div>
 </body>
 </html>
