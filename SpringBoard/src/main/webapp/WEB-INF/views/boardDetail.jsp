@@ -9,13 +9,13 @@
 </head>
 <body>
 	<div class="container">
-		<h1 class="text text-info">${board.bno }번 글 상세페이지</h1>
+		<h1 class="text text-primary">${board.bno }번 글 상세페이지</h1>
 		<div class="row">
-			<div class="col-md-3">
-				글제목 : <input type="text" class="form-control" value="${board.title }" readonly>
+			<div class="col-md-9">
+				 <input type="text" class="form-control" value="글제목 : ${board.title }" readonly>
 			</div>
 			<div class="col-md-3">
-				글쓴이 : <input type="text" class="form-control" value="${board.writer }" readonly>
+				<input type="text" class="form-control" value="글쓴이 : ${board.writer }" readonly>
 			</div>
 		</div>
 			<textarea class="form-control" rows="10" readonly>${board.content }</textarea>
@@ -31,6 +31,7 @@
 	<input type="hidden" value="${board.bno }" name="bno"/>
 	<input type="submit" value="삭제하기" class="btn btn-danger"/>
 	</form>
+	
 	<form action="/boardUpdateForm" method="post">
 	<input type="hidden" value="${board.bno }" name="bno"/>
 	<input type="submit" value="수정"/>

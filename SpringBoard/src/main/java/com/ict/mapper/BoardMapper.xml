@@ -8,7 +8,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   <select id="getList" resultType="com.ict.domain.BoardVO">
   <!-- 부등호를 쓰기위해서는 <![CDATA[실행문]]> 과 같이 내부에 작성하면 부등호는 문자로 간주된다 -->
 <![CDATA[
-SELECT*FROM board_tbl order by bno desc
+select*from
+(select /*+INDEX_DESC(board_tbl pk_board)*/
+rownum rn,board_tbl.* from board_tbl where rownum<=(#{pageNum}*10))
+where rn>((#{pageNum}-1)*10)
 ]]>
  </select>
  

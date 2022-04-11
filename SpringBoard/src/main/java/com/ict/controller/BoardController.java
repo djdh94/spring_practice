@@ -32,9 +32,9 @@ public class BoardController {
 	// 메서드 내부에서는 boardMapper의 .getAllList를 호출해 그결과를 바인딩하기
 	
 	@GetMapping("/boardList")
-	public String getboardList(Model model) {
+	public String getboardList(long pageNum,Model model) {
 		// model.addAttribute("바인딩이름",바인딩자료);
-		List<BoardVO> List =boardMapper.getList();
+		List<BoardVO> List =boardMapper.getList(pageNum);
 		model.addAttribute("List",List);
 		return "boardList";
 	}
@@ -97,8 +97,10 @@ public class BoardController {
 		return "BoardUpdateForm";
 	}
 	@PostMapping("/boardUpdate")
-	public String boardUpdate() {
-		return "redirect:/boardList";
+	public String boardUpdate(BoardVO board) {
+		boardMapper.update(board);
+	
+		return "redirect:/boardDetail/"+board.getBno();
 	}
 	
 	

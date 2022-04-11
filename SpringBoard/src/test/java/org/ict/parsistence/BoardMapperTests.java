@@ -24,7 +24,7 @@ public class BoardMapperTests {
 	private BoardMapper boardMapper;
 	//@Test
 	public void testGetList() {
-		List<BoardVO> result=boardMapper.getList();
+		List<BoardVO> result=boardMapper.getList(1);
 		log.info(result);
 	}
 	//@Test
@@ -60,7 +60,6 @@ public class BoardMapperTests {
 		board.setBno(24);
 		log.info(board);
 		boardMapper.update(board);
-		
 	}
 	
 }

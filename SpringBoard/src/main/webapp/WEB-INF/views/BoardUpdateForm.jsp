@@ -8,10 +8,11 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="/boardUpdateForm" method="post">
-<input type="text"  value="${board.writer }"readonly><br/>
-<input type="text"  value="${board.title }"readonly>
-<textarea rows="20" cols="100" readonly>${board.content }</textarea>
+<form action="/boardUpdate" method="post">
+<input type="hidden" name="bno" value="${board.bno }"><br/>
+<input type="text"  name="writer" value="${board.writer }"><br/>
+<input type="text" name="title" value="${board.title }">
+<textarea rows="20" name="content" cols="100" >${board.content }</textarea>
 <input type="submit" value="수정하기">
 </form>
 </body>

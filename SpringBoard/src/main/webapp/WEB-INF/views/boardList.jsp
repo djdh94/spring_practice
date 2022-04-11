@@ -9,32 +9,32 @@
 <title>Insert title here</title>
 </head>
 <body>
-<div class="container">
-<table class="table table-hover">
-<thead>
-<tr>
-<td>글번호</td>
-<td>글제목</td>
-<td>글내용</td>
-<td>글쓴이</td>
-<td>등록날짜</td>
-<td>수정날짜</td>
-</tr> 
-</thead>
-<tbody>
-<c:forEach var="List" items="${List }">
-<tr> 
-<td>${List.bno }</td>
-<td><a href="/boardDetail/${List.bno}">${List.title }</a></td>
-<td>${List.content }</td>
-<td>${List.writer }</td>
-<td>${List.regdate }</td>
-<td>${List.updatedate }</td>
-</tr>
-</c:forEach>
-</tbody>
-</table>
-<a href="/boardInsert"class="btn btn-success">글쓰기</a>
-</div>
+		<div class="container">
+		<table class="table table-hover">
+		<thead>
+		<tr>
+		<td>글번호</td>
+		<td>글제목</td>
+		<td>글내용</td>
+		<td>글쓴이</td>
+		<td>등록날짜</td>
+		<td>수정날짜</td>
+		</tr> 
+		</thead>
+		<tbody>
+		<c:forEach var="List" items="${List }">
+		<tr> 
+		<td>${List.bno }</td>
+		<td><a href="/boardDetail/${List.bno}">${List.title }</a></td>
+		<td>${List.content }</td>
+		<td>${List.writer }</td>
+		<td>${List.regdate }</td>
+		<td>${List.updatedate }</td>
+		</tr>
+		</c:forEach>
+		</tbody>
+		</table>
+		<a href="/boardInsert"class="btn btn-success">글쓰기</a>
+		</div>
 </body>
 </html>
