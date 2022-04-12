@@ -9,13 +9,15 @@
 </head>
 <body>
 	<div class="container">
-		<h1 class="text text-primary">${board.bno }번 글 상세페이지</h1>
+		<h1 class="text text-info">${board.bno }번 글 상세페이지</h1>
 		<div class="row">
-			<div class="col-md-9">
-				 <input type="text" class="form-control" value="글제목 : ${board.title }" readonly>
+			<div class="col-md-1">글제목</div>
+			<div class="col-md-5">
+				<input type="text" class="form-control" value="${board.title }" readonly>
 			</div>
-			<div class="col-md-3">
-				<input type="text" class="form-control" value="글쓴이 : ${board.writer }" readonly>
+			<div class="col-md-1">글쓴이</div>
+			<div class="col-md-5">
+				<input type="text" class="form-control" value="${board.writer }" readonly>
 			</div>
 		</div>
 			<textarea class="form-control" rows="10" readonly>${board.content }</textarea>
@@ -25,17 +27,24 @@
 			<div class="col-md-3">수정날짜 : </div>
 			<div class="col-md-3">${board.updatedate }</div>
 		</div>
+		<div class="row">
+			<div class="col-md-1">
+				<a href="/boardList" class="btn btn-info btn-sm">목록</a>
+			</div>
+			<div class="col-md-1">
+				<form action="/boardDelete" method="post">
+					<input type="hidden" name="bno" value="${board.bno }">
+					<input type="submit" value="삭제" class="btn btn-danger btn-sm">
+				</form>
+			</div>
+			<div class="col-md-1">
+				<form action="/boardUpdateForm" method="post">
+					<input type="hidden" name="bno" value="${board.bno }">
+					<input type="submit" value="수정" class="btn btn-warning btn-sm">
+				</form>
+			</div>
+		</div>
 	</div>
-	<a href="/boardList"class="btn btn-success">글목록</a>
-	<form action="/boardDelete" method="post">
-	<input type="hidden" value="${board.bno }" name="bno"/>
-	<input type="submit" value="삭제하기" class="btn btn-danger"/>
-	</form>
-	
-	<form action="/boardUpdateForm" method="post">
-	<input type="hidden" value="${board.bno }" name="bno"/>
-	<input type="submit" value="수정"/>
-	</form>
 	
 </body>
 </html>
