@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.ict.domain.BoardVO;
 import com.ict.domain.Criteria;
 import com.ict.domain.PageMaker;
+import com.ict.domain.SearchCriteria;
 import com.ict.mapper.BoardMapper;
+import com.ict.service.BoardService;
 
 
 
@@ -24,12 +26,18 @@ import com.ict.mapper.BoardMapper;
 
 public class BoardController {
 
+	// 컨트롤러는 Service만 호출하도록 구조를 바꿉니다.
+	// Service를 BoardController 내부에서 쓸 수 있도록 선언/주입하기
+	
+	@Autowired
+	private BoardService service;
+	
+	
 	// 전체 회원을 보려면, 회원목록을 들고오는 메서드를 실행해야 하고
 	// 그 메서드를 보유하고 있는 클래스를 선언하고 주입해줘야함
 	// db접근시 사용하는 BoardMapper를 선언하고 주입해야함
 	// 참고) BoardMapperTests.java
-	@Autowired
-	private BoardMapper boardMapper;
+	
 	
 	// 전체 글 목록을 볼수있는 페이지인 boardList.jsp로 연결되는
 	// /boardList 주소를 get방식으로 선언하기
@@ -40,18 +48,18 @@ public class BoardController {
 	// @PathVariable의 경우 defaultValue를 직접 줄 수 없으나 ,required_false를 이용해 필수입력을 안받게 처리한 후
 	// 컨트롤러 내부에서 디폴트값을 입력해줄 수 있다.
 	// 기본형 자료는 null을 저장할 수 없기 때문에 wrapper class를 이용해 Long을 선언합니다.
-	public String getboardList(Criteria cri,Model model) {
+	public String getboardList(SearchCriteria cri,Model model) {
 		//if(pageNum==null) {
 		//	pageNum=1L; // Long형은 숫자 뒤에 L을 붙여야 대입됩니다
 		//}
 		// model.addAttribute("바인딩이름",바인딩자료);
-		List<BoardVO> List =boardMapper.getList(cri);
+		List<BoardVO> List =service.getList(cri);
 		model.addAttribute("List",List);
 		
 		//버튼 처리를 위해 추가로 페이지메이커 생성 및 세팅
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri); // cri 입력
-		int countPage=boardMapper.CountPageNum(); //131대신 실제로 db내 글 개수를 받아옴
+		int countPage=service.countPageNum(); //131대신 실제로 db내 글 개수를 받아옴
 		pageMaker.setTotalBoard(countPage); // calcData()호출도 되면서 순식간에 prev,next,startPage,endPage 세팅
 		model.addAttribute("pageMaker",pageMaker);
 		
@@ -63,7 +71,7 @@ public class BoardController {
 	// 주소뒤에 ?bno=번호 형식으로 적힌 번호 글만 조회합니다.
 	@GetMapping("/boardDetail/{bno}")  
 	public String boardDetail(@PathVariable long bno,Model model) {
-		BoardVO board = boardMapper.select(bno);
+		BoardVO board = service.select(bno);
 		model.addAttribute("board",board);
 		return "boardDetail";
 	}
@@ -73,7 +81,7 @@ public class BoardController {
 	// 폼페이지의 이름은 boardForm.jsp입니다.
 	
 	@GetMapping("/boardInsert")
-	public String getInsert () {
+	public String getInsert(){
 		return "boardForm";
 	}
 	
@@ -84,7 +92,7 @@ public class BoardController {
 	// boardList로 돌려보내기
 	@PostMapping("/boardInsert")
 	public String boardInsert(BoardVO board) {
-		boardMapper.insert(board);
+		service.insert(board);
 		return "redirect:/boardList";
 	}
 	
@@ -98,7 +106,7 @@ public class BoardController {
 	@PostMapping("/boardDelete")
 	public String boardDelete(long bno) {
 		// 삭제 로직 실행
-		boardMapper.delete(bno);
+		service.delete(bno);
 		// 리턴으로 리스트페이지 복귀
 		return "redirect:/boardList";
 	}
@@ -111,16 +119,18 @@ public class BoardController {
 	
 	@PostMapping("/boardUpdateForm")
 	public String boardUpdate(long bno,Model model) {
-		BoardVO board = boardMapper.select(bno);
-		model.addAttribute("board",board);
+		 
+		model.addAttribute("board",service.select(bno));
 		return "BoardUpdateForm";
 	}
 	@PostMapping("/boardUpdate")
 	public String boardUpdate(BoardVO board) {
-		boardMapper.update(board);
+		service.update(board);
 	
 		return "redirect:/boardDetail/"+board.getBno();
 	}
+	
+	
 	
 	
 }
