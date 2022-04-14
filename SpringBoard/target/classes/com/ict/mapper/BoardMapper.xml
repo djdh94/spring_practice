@@ -4,13 +4,61 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http:/mybatis.rg/dtd/mybatis-3-mapper.dtd">
 
 		<mapper namespace="com.ict.mapper.BoardMapper">
+		<sql id="search">
+		
+		<if test="searchType !=null">
+			<if test="searchType == 't'.toString()">
+			(TITLE like '%'||#{keyword}||'%') AND
+			</if>
+			<if test="searchType == 'c'.toString()">
+			(Content like '%'||#{keyword}||'%') AND
+			</if>
+			<if test="searchType == 'w'.toString()">
+			(Writer like '%'||#{keyword}||'%') AND
+			</if>
+			<if test="searchType == 'tc'.toString()">
+			((Title like '%'||#{keyword}||'%')
+							or
+			(Content like '%'||#{keyword}||'%')) AND
+			</if>
+			<if test="searchType == 'cw'.toString()">
+			((Content like '%'||#{keyword}||'%')
+							or
+			(Writer like '%'||#{keyword}||'%')) AND
+			</if>
+			<if test="searchType == 'tcw'.toString()">
+			((Title like '%'||#{keyword}||'%')
+							or
+			(Content like '%'||#{keyword}||'%')
+							or
+			(Writer like '%'||#{keyword}||'%')) AND
+			</if>
+		</if>
+		
+		</sql>
 		
 		  <select id="getList" resultType="com.ict.domain.BoardVO">
 		  <!-- 부등호를 쓰기위해서는 <![CDATA[실행문]]> 과 같이 내부에 작성하면 부등호는 문자로 간주된다 -->
 		<![CDATA[
 		select*from
 		(select /*+INDEX_DESC(board_tbl pk_board)*/
-		rownum rn, board_tbl. * from board_tbl where rownum <= (#{pageEnd}))
+		rownum rn, board_tbl. * from board_tbl where 
+		]]>
+		
+		<include refid="search"></include>
+		
+		<!-- 조건에 따른 쿼리문이 가변적으로 추가될 부분 
+		이 쿼리문을 돌리면서 SearchCriteria를 돌리고 있으므로
+		SearchCriteria.searchType을 아래처럼 변수명만 적어 감지가 됨
+		
+		상단의 sql 태그를 이용해 명칭을 부여했으므로, 명칭만 맞추면 긴 내용을 다 넣지 않아도 됨-->
+		<include refid="search"></include>
+		
+		<!-- 글 번호를 조절하기 위한 부분 -->
+		
+		
+		<![CDATA[
+		rownum <= (#{pageEnd}))
 		where rn > #{pageStart}
 		]]>
 		<!-- getter는 #{}내부에서 호출 가능함
@@ -18,6 +66,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 맨앞글자는 무조건 소문자-->
 		 
 		 </select>
+		 
+		 
 		 
 		 <!-- insert 구문이므로 insert태그를 써야하고 리턴자료가 없으니 resultType도 작성안합니다 -->
 		 <insert id="insert">
@@ -40,6 +90,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 </update>
 		 
 		 <select id="CountPageNum" resultType="int">
-		 select count(*) from board_tbl
+		 <![CDATA[
+		 select count(*) from board_tbl where
+		 ]]>
+		
+		<!-- 글 개수 조회구문에도 include 태그로 입력 -->
+		<include refid="search"/>
+		
+		 <![CDATA[
+		bno>0
+		 ]]>
 		 </select>
 		</mapper>

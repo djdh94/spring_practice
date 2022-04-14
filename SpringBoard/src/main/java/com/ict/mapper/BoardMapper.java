@@ -4,11 +4,12 @@ import java.util.List;
 
 import com.ict.domain.BoardVO;
 import com.ict.domain.Criteria;
+import com.ict.domain.SearchCriteria;
 
 public interface BoardMapper {
 
 	// 버튼 추가를 위해 pageNum 대신 Criteria를 활용합니다.
-	public List<BoardVO> getList(Criteria cri);
+	public List<BoardVO> getList(SearchCriteria cri);
 	
 	public void insert(BoardVO vo);
 	
@@ -24,7 +25,7 @@ public interface BoardMapper {
 	// 전체 글 개수를 얻어오는 getPageNum를 선언합니다.
 	// 파라미터는 필요없습니다.
 	// 글개수=>정수 값을 조회하기때문에 int리턴입니다.
-	public int CountPageNum();
+	public int CountPageNum(SearchCriteria cri);
 		
 	
 	

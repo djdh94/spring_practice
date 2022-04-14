@@ -25,8 +25,8 @@ public class BoardMapperTests {
 	private BoardMapper boardMapper;
 	//@Test
 	public void testGetList() {
-		List<BoardVO> result=boardMapper.getList(1);
-		log.info(result);
+		//List<BoardVO> result=boardMapper.getList(1);
+		//log.info(result);
 	}
 	//@Test
 	public void testInsert() {
