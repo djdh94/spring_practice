@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http:/mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.ict.time.mapper.BoardMapper">
+<mapper namespace="com.ict.mapper.BoardMapper">
 
-<select id="getList" resultType="com.ict.mapper.BoardMapper">
+<select id="getList" resultType="com.ict.domain.BoardVO">
 <![CDATA[
 select*from board_tbl where bno<4
 ]]>

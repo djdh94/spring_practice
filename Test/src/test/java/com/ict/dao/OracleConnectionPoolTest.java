@@ -6,6 +6,8 @@ import java.sql.Connection;
 
 import javax.sql.DataSource;
 
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +23,29 @@ public class OracleConnectionPoolTest {
 
 	@Autowired
 	private DataSource dataSource;
+	@Autowired
+	private SqlSessionFactory sqlSessionFactory;
 	
-	@Test
+	//@Test
 	public void testConnection() {
 		try (Connection con = dataSource.getConnection()){
 			log.info(con);
 			log.info("hikariCP connection");
 		}catch(Exception e) {
+			fail(e.getMessage());
+		}
+		
+	}
+	
+	@Test
+	public void testmyBatis() {
+		try (SqlSession session = sqlSessionFactory.openSession();
+				Connection con = session.getConnection();){
+			System.out.println("마이바티스 연결시작");
+			log.info(session);
+			log.info(con);
+		}catch (Exception e) {
+			
 			fail(e.getMessage());
 		}
 	}

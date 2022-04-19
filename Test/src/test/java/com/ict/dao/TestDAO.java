@@ -16,4 +16,6 @@ public class TestDAO{
 		return sqlSession.selectOne("매퍼 아이디", map);
 	}
 	
+	
+	
 }

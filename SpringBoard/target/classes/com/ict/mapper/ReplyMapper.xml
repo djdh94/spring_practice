@@ -11,7 +11,7 @@ select * from reply_tbl where bno=#{bno} order by rno desc
 
 
 <insert id="create">
-insert into reply_tbl (rno,bno,reply,replyer) value(reply_num.nextval,#{bno},#{reply},#{replyer})
+insert into reply_tbl (rno,bno,reply,replyer) values (reply_num.nextval,#{bno},#{reply},#{replyer})
 </insert>
 
 <update id="update">

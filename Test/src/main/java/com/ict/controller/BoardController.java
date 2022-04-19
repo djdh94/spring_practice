@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.ict.domin.BoardVO;
+import com.ict.domain.BoardVO;
 import com.ict.mapper.BoardMapper;
 
 @Controller
@@ -22,6 +22,4 @@ public class BoardController {
 	model.addAttribute("board",board);
 		return "boardList";
 	}
-	
-	
 }

@@ -2,7 +2,7 @@ package com.ict.mapper;
 
 import java.util.List;
 
-import com.ict.domin.BoardVO;
+import com.ict.domain.BoardVO;
 
 public interface BoardMapper {
 

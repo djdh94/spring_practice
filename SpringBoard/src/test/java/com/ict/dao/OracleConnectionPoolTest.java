@@ -33,7 +33,7 @@ import lombok.extern.log4j.Log4j;
 	// 그래서 보통 하나의 테스트가 끝나면 주석처리해서 실행은 가능하지만
 	// 현재는 실행이 안되게 조치함
 	
-	//@Test
+	@Test
 	public void testConnection() {
 		try(Connection con = dataSource.getConnection()){
 			log.info(con);
@@ -41,8 +41,8 @@ import lombok.extern.log4j.Log4j;
 			fail(e.getMessage());
 		}
 	}
-	
-	@Test
+
+	//@Test
 	public void testmyBatis() {
 		try (SqlSession session = sqlSessionFactory.openSession();
 				Connection con = session.getConnection();){
