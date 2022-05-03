@@ -2,8 +2,9 @@ package com.ict.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.ict.domain.BoardVO;
-import com.ict.domain.Criteria;
 import com.ict.domain.SearchCriteria;
 
 public interface BoardMapper {
@@ -27,6 +28,8 @@ public interface BoardMapper {
 	// 글개수=>정수 값을 조회하기때문에 int리턴입니다.
 	public int CountPageNum(SearchCriteria cri);
 		
+	public void updateReplyCount(@Param("bno")Long bno,
+								@Param("amount")int amount);
 	
 	
 }

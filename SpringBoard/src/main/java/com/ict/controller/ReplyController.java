@@ -3,8 +3,6 @@ package com.ict.controller;
 
 import java.util.List;
 
-import javax.swing.text.html.parser.Entity;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -78,40 +76,37 @@ public class ReplyController {
 		}
 		
 		// 일반 방식이 아닌 rest방식에서는 삭제로직 post가 아닌
-		// delete 방식으로 요청하기 때문에 @deleteMappiong을 씁니다.
-		@DeleteMapping(value="/{rno}",
-				produces = {MediaType.TEXT_PLAIN_VALUE}) 
-		public ResponseEntity<String> remove(
-				@PathVariable("rno") Long rno){
-			ResponseEntity<String> entity=null;
+		// delete 방식으로 요청하기 때문에 @DeleteMapping을 씁니다.
+		
+		@DeleteMapping(value="/{rno}", produces = {MediaType.TEXT_PLAIN_VALUE})
+		public ResponseEntity<String> remove(@PathVariable("rno")Long rno){
+			ResponseEntity<String> entity = null;
 		try {
 			service.removeReply(rno);
-			entity=new ResponseEntity<String>(
-					"SUCCESS",HttpStatus.OK);
+			entity=new ResponseEntity<String>("SUCCESS",HttpStatus.OK);
 		}catch(Exception e) {
-			entity=new ResponseEntity<String>(
-					e.getMessage(),HttpStatus.BAD_REQUEST);
+			entity=new ResponseEntity<String>(e.getMessage(),HttpStatus.BAD_REQUEST);
 		}
-		return entity;		
+		return entity;
 		}
 		
-		@RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH},
-				value="/{rno}",
-				consumes = "application/json",
-				produces = {MediaType.TEXT_PLAIN_VALUE})
+		@RequestMapping(method = {RequestMethod.PUT,RequestMethod.PATCH},
+		value="/{rno}",
+		consumes="application/json",
+		produces= {MediaType.TEXT_PLAIN_VALUE})
 		public ResponseEntity<String> modify(
 				// VO는 우선 payload에 적힌 데이터로 받아옵니다.
 				// @RequestBody가 붙은 VO는
-				// payload에 적힌 데이터를 VO로 환산해서 가져옵니다
+				// payload에 적힌 데이터를 VO로 환산해서 가져옵니다.
 				@RequestBody ReplyVO vo,
-				// 단, 댓글번호는 주소에 기입된 숫자를 자원으로 받아옵니다.
+				//단,댓글번호는 주소에 기입된 숫자를 자원으로 받아옵니다.
 				@PathVariable("rno") Long rno){
-			ResponseEntity<String> entity = null;
+			ResponseEntity<String> entity=null;
 			try {
 				// payload에는 reply만 넣어줘도 되는데 그 이유는
-				// rno는 요청주소로 받아오기 때문입니다.
+				// rno는 요청주소로 받아오기 떄문입니다.
 				// 단, rno를 주소로 받아오는 경우는 아직 replyVO에
-				// rno가 세팅이 되지 않은 상태이므로 setter로 rno 까지
+				// rno가 세팅이 되지 않은 상태이므로 setter로 rno까지
 				// 지정해줍니다.
 				vo.setRno(rno);
 				service.modifyReply(vo);
@@ -124,7 +119,10 @@ public class ReplyController {
 						e.getMessage(),HttpStatus.BAD_REQUEST);
 			}
 			return entity;
-		}
+						
+						
+			}
 				
-}
 		
+		}
+

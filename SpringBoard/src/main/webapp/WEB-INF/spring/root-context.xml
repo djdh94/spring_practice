@@ -3,17 +3,24 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 	
+	<!-- context 네임스페이스 태그를 이용해 평문을 그대로 적지 않고
+	파일명만 명시해서 어떤 자료인지 다른 사용자가 모르게 처리
+	 src/main/resources 내부에 작성한 properties 내부에 기술된 사항을
+	 명칭으로만 가져올 수 있도록 처리-->
+	 <context:property-placeholder location="classpath:db.properties"/>
+	 
+	 <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+	 <context:annotation-config></context:annotation-config>
 	<!-- Root Context: defines shared resources visible to all other web components -->
 		
-		<!-- context 네임스페이스 태그를 이용해 평문을 그대로 적지 않고
-		파일명만 명시해서 어떤 자료인지 다른 사용자가 모르게 처리
-		src/main/resources 내부에 작성한 properties 내부에 기술된 사항을
-		명칭으로만 가져올수있도록 처리	-->
-		<context:property-placeholder location="classpath:db.properties"/>
 		<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 		<property name="driverClassName" 
 				  value="${db.driverClassNmae}"></property>
@@ -23,13 +30,13 @@
 		<property name="password" value="${db.password}"></property>
 	</bean>
 
-	<bean id="datasource"
+	<bean id="dataSource"
 		  class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
 		  <constructor-arg ref="hikariConfig"></constructor-arg>
 	</bean>
 	
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-	<property name="dataSource" ref="datasource"></property>
+	<property name="dataSource" ref="dataSource"></property>
 	</bean>
 	
 	<!-- com.ict.mapper 패키지 생성후 BoardMapper 인터페이스와 xml파일을 생성하기 -->
@@ -37,6 +44,20 @@
 	<mybatis-spring:scan base-package="com.ict.time.mapper"/>
 	
 	<context:component-scan base-package="com.ict.service"/>
+	
+	<!-- 트랜잭션 실행을 위한 transactionManager 객체 생성, 
+		annotation-driven 태그 작성, 쿼리문 입력할 마이바티스 매퍼 스캔 -->
+		<bean id="transactionManager"
+		 	class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		 	<property name="dataSource" ref="dataSource"></property>	
+		</bean>
+	
+	 <!-- 어노테이션을 거는것만으로 트랜잭션 작동하도록 도와줌 -->
+		 <tx:annotation-driven/>
+		 
+		 
+		 	<!-- @Aspect를 받은 클래스는 AOP의 타겟임을 알림 -->
+		<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 	
 	
 </beans>

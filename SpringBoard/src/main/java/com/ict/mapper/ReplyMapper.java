@@ -17,4 +17,9 @@ public interface ReplyMapper {
 	
 	// 댓글 삭제시는 단일 댓글 하남나 삭제해야 하므로 댓글번호를 받는다.
 	public void delete(Long rno);
+	
+	public Long getBno(Long rno);
+	
+	// bno 번글에 달린 댓글을 다 삭제하는 쿼리문 생성
+	public void deleteAllReplies(Long bno);
 }

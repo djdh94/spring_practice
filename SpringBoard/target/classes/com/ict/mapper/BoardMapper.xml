@@ -101,4 +101,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		bno>0
 		 ]]>
 		 </select>
+		 
+		 <update id = "updateReplyCount">
+		 UPDATE board_tbl
+			SET
+		replycount = replycount+#{amount} where bno = #{bno}
+		 </update>
+		 
+		 
 		</mapper>

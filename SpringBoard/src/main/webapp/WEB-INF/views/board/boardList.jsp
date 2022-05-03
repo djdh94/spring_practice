@@ -25,7 +25,7 @@
 		<c:forEach var="List" items="${List }">
 		<tr> 
 		<td>${List.bno }</td>
-		<td><a href="/board/boardDetail/${List.bno}?pageNum=${pageMaker.cri.pageNum}&searchType=${pageMaker.cri.searchType}&keyword=${pageMaker.cri.keyword}">${List.title }</a></td>
+		<td><a href="/board/boardDetail/${List.bno}?pageNum=${pageMaker.cri.pageNum}&searchType=${pageMaker.cri.searchType}&keyword=${pageMaker.cri.keyword}">${List.title } [${List.replycount }]</a></td>
 		 
 		<td>${List.content }</td>
 		<td>${List.writer }</td>
